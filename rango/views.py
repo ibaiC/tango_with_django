@@ -19,12 +19,16 @@ def index(request):
     # Note that the first parameter is the template we wish to use.
     return render(request, 'rango/index.html', context_dict)
 
+def about(request):
+    about_context = {'boldmessage':"We have happy frogs in this directory."}
+    return render(request, 'rango/about.html', context=about_context)
+
 def show_category(request, category_name_slug):
     context_dict = {}
 
     try:
         category = Category.objects.get(slug=category_name_slug)
-        paes = Page.objects.filter(category=category)
+        pages = Page.objects.filter(category=category)
         context_dict['pages'] = pages
         context_dict['category'] = category
         
