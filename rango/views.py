@@ -20,7 +20,7 @@ def index(request):
     return render(request, 'rango/index.html', context_dict)
 
 def show_category(request, category_name_slug):
-    context_dict{}
+    context_dict = {}
 
     try:
         category = Category.objects.get(slug=category_name_slug)
