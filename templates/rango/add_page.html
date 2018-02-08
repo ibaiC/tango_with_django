@@ -1,36 +1,35 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<title>Rango</title>
-	</head>
+{% extends 'rango/base.html' %}
+{% load staticfiles %}
 
-	<body>
-		{% if category %}
+{% block title_block %}
+    Add Page
+{% endblock %}
 
-		<h1>Add a page to {{ category.name }}</h1>
-		<div>
-			<form id="page_form" method="post" action="/rango/category/{{ category.slug }}/add_page/">
+{% block body_block %}
+    {% if user.is_authenticated %}
+        {% if category %}
 
-			{% csrf_token %}
-			{% for hidden in form.hidden_fields %}
-				{{ hidden }}
-			{% endfor %}
+            <h1>Add a page to {{ category.name }}</h1>
+            <form id="page_form" method="post" action="/rango/category/{{ category.slug }}/add_page/">
+            {% csrf_token %}
+            {% for hidden in form.hidden_fields %}
+                {{ hidden }}
+            {% endfor %}
 
-			{% for field in form.visible_fields %}
-				{{ fields.errors }}
-				{{ field.help_text }}
-				{{ field }}
-			{% endfor %}
-
-			<input type="submit" name="submit" value="Add Page" />
-
-			</form>
-
-		{% else %}
-			The specified category does not exist!
-		{% endif %}
-
-		<a href="/rango">Index</a><br />
-		</div>
-	</body>
-</html>
+            {% for field in form.visible_fields %}
+                {{ fields.errors }}
+                {{ field.help_text }}
+                {{ field }}
+            {% endfor %}
+    
+        {% else %}
+            The specified category does not exist!
+        {% endif %}
+        <input type="submit" name="submit" value="Add Page" />
+    </form>
+  
+    {% else %}
+       <strong>You cannot access this page!</strong>
+        <a href="{% url 'index' %}">Return to the homepage.</a><br />
+    {% endif %}  
+{% endblock %}
